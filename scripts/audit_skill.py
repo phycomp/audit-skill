@@ -46,7 +46,6 @@ TEXT_EXT = {
     ".rb", ".php", ".html", ".css", ".xml", ".ini", ".cfg", ".conf",
 }
 MAX_READ = 2_000_000
-SKIP_FILE = {"audit_skill.py"}
 
 DANGEROUS_RE = {
     "shell/eval": re.compile(r"\b(eval|exec|Function\(|child_process|spawnSync|spawn\(|execSync|subprocess\.|os\.system|shell=True|Runtime\.evaluate)\b"),
@@ -364,7 +363,7 @@ def main() -> int:
         rel = p.relative_to(target)
         cls = classify(rel)
         files[cls] += 1
-        if cls == "project" and p.name not in SKIP_FILE:
+        if cls == "project" and p.resolve() != Path(__file__).resolve():
             project_files.append(p)
 
     scan = {"available": False, "reason": "skipped (--no-scan)"}
@@ -443,7 +442,7 @@ def verify_manifest(manifest: Path, target: Path) -> int:
     # detect new files
     current = set()
     for p in iter_files(target):
-        if classify(p.relative_to(target)) == "project" and p.name not in SKIP_FILE:
+        if classify(p.relative_to(target)) == "project" and p.resolve() != Path(__file__).resolve():
             current.add(str(p.relative_to(target)))
     for rel in sorted(current - set(expected)):
         drift.append(f"NEW      {rel}")
