@@ -1,3 +1,12 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# AOCI agent host integration (machine-bound; do not commit)
+opencode.json
+opencode.json.backup.*
+.aoci/
+aoci.txt
+aoci.code.txt
+aoci.meta.txt
+AGENTS.md
