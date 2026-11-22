@@ -29,4 +29,3 @@ Trigger phrases: "develop a new skill", "find/install a skill", "vet an existing
 ## License
 
 MIT
-EOF
